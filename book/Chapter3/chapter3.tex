@@ -16,7 +16,10 @@
 \begin{description}
 \item[Modelo simb\'olico:] Modelo basado en el uso de sistemas de representaciones entendibles para los humanos con el objetivo de resolver problemas de aprendizaje. \citet{GARNELO201917}.
 \item[Sistemas de s\'imbolos f\'isicos:] Sistemas compuestos de elementos f\'isicos llamados s\'imbolos, colecciones de estos s\'imbolos llamados expresiones, y un conjunto de procesos capaces de crear, modificar, reproducir y destruir expresiones \citet{newell197603}.
+\item[Heur\'isticas:] Estrategias que usan informaci\'on disponible para controlar procesos en escenarios de resoluci\'on de problemas\citet{pearl1984}.
 \end{description}
+
+\subsection{Introducci\'on}
 
 Los modelos simb\'olicos en inteligencia artificial se basan en el concepto de sistemas de s\'imbolos f\'isicos, que para garantizar sus propiedades de aprendizaje necesitan cumplir algunas reglas, entre ellas:
 
@@ -29,21 +32,92 @@ Al cumplir estas reglas, no especificadas por completo dada la naturaleza evolut
 
 Una instancia de sistemas que puede considerarse simb\'olicos son las colecciones de condicionales dise\~nadas para alguna tarea de aprendizaje, por ejemplo, un experto analista de riesgo en un banco define un conjunto de reglas que tiene que cumplir un candidato para optar por un cr\'edito, en este escenario, el sistema podr\'a ser capaz de, automáticamente, clasificar si un candidato debe ser aprobado o no. Un tipo m\'as avanzado de implementaciones comprende la generaci\'on autom\'atica de reglas capaces de resolver, por ejemplo, el mismo escenario de clasificaci\'on.
 
+Los algoritmos de b\'usqueda cobran particular importancia en este tipo de modelos dado que estod modelos dependen de representar las soluciones posibles en el sistema de símbolos físicos, entonces el problema se traduce en buscar la respuesta correcta en dicho espacio. En este sentido los arboles son estructuras de datos recurrentes en el aprendizaje simb\'olico.
+
+La capacidad de estos modelos de utilizar información de expertos en la generación de soluciones a los problemas (heur\'isticas), provee una ventaja en problemas de aprendizaje autom\'atico en problemas complejos.
+
 \section{Sistemas basados en conocimiento}
-\subsection{Herramientas de desarrollo}
 
-\section{Arquitecturas}
+\begin{description}
+\item[Sistema basado en conocimiento:] Sistema que posee conocimiento del dominio del problema a resolver. Este conocimiento se diferencia claramente de los mecanismos de inferencia que use el modelo \citet{Howe1991KnowledgebasedSA}.
 
-\section{Mecanismo de control}
+\item[Axioma:] Unidad m\'inima de informaci\'on almacenada en una sistema basado en conocimiento, no derivada de otras piezas de informaci\'on. 
 
-\section{Sistemas expertos}
+\item[Inferencia:] Proceso que permite la inserci\'on de nuevas piezas de informaci\'on en el sistema o generaci\'on de repuestas a partir de la informaci\'on previamente almacenada (\citet{russell2009} cap\'itulo 7).
 
-\section{Mecanismo de control}
+\item[Sistema experto:] Un sistema basado en conocimiento, cuyo conocimiento del dominio del problema ha sido provisto por expertos de dicho problema.
+\end{description}
+
+Los sistemas basados en conocimientos no son frecuentes en aplicaciones recientes de IA, sin embargo, histor\'icamente han formado parte de hitos c\'omo ser el sistema utilizado para lograr vencer por primera vez a un campe\'on mundial de ajedrez (DeepBlue \citet{CAMPBELL200257}).
+
+Dentro de los principales aportes realizados por dicho hito se encuentra:
+
+\begin{itemize}
+    \item Mecanismo de b\'usqueda aplicado a ajedrez usando un s\'olo chip de procesamiento.
+    \item Sistema de procesamiento paralelo en multiples niveles.
+    \item Uso efectivo de una base de datos de juegos completos de campeones mundiales.
+\end{itemize}
+
+El primer y \'ultimo aporte ejemplifican la naturaleza de dependencia del contexto de los sistemas basados en conocimiento dado que se necesita una especializaci\'on en utilizar una representaci\'on interpretable del problema en cuesti\'on y esta representaci\'on puede variar de problema en problema.
+
+\section{Arquitectura}
+
+Los sistemas basados en conocimiento estan conformados por los siguientes componentes:
+
+\subsection{Base de conocimiento}
+
+Este compoenente permite almacenar axiomas y unidades de informaci\'on derivada, esto puede incluir tanto observaciones del contexto del problema c\'omo heur\'isticas que mejoran la capacidad del sistema de realizar la tarea deseada.
+
+La informaci\'on adquirida luego de la creaci\'on del sistema, normalmente, se refleja en el formato de reglas condicionales (si ocurre X entonces ocurre Y, de lo contraio ocurre Z).
+
+\subsection{Mecanismo de inferencia}
+
+Una serie de procesos que permiten la creaci\'on de nuevas unidades de informaci\'on y de esta manera la adquisici\'on de conocimiento necesaria para conseguir alguna soluci\'on.
+
+En cuanto a sistemas de conocimiento basados en reglas el proceso consta de:
+
+\begin{itemize}
+    \item Aplicar recurrentemente las reglas disponibles a las unidades de informaci\'on o hechos almacenados en la base de conocimiento.
+    \item Almacenar el nuevo conocimiento generado por la aplicaci\'on de reglas en la base de conocimiento.
+    \item Resolver conflictos entre m\'ultiples reglas aplicables a los mismos casos.
+\end{itemize}
+
+As\'i mismo, la soluci\'on del sistema es generada mediante dos estrategias principales:
+
+\textbf{Encadenamiento hacia adelante:} Generaci\'on de conclusiones a partir de la aplicaci\'on de reglas a los hechos.
+
+\textbf{Encadenamiento hacia atr\'as:} Deducci\'on de hechos y reglas involucrados en la generaci\'on de una conclusi\'on particular, con el fin de entender su ocurrencia.
+
+\subsection{Interfaz de usuario}
+
+Este componente permite al usuario percibir los resultados de los diferentes encadenamientos, uso de reglas y hechos almacenados en la base de conocimiento.
 
 \section{Aplicaciones}
 
+Algunas aplicaciones \ref{table:kb_apps} listadas ac\'a est\'an conformadas por sistemas complejos que internamente incorporan conceptos de los sitemas basados en conocimiento. 
 
 
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\label{table:kb_apps}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Dominio}    & \textbf{Descripci\'on}  \\ \midrule
+Dise\~no           & Dise\~no de c\'amaras y veh\'iculos.  \\
+Medicina          & Sistemas de diagn\'ostico de enfermedades a partir de s\'intomas.       \\
+Sistemas de monitoreo      & Comparar flujos de datos cont\'inuos con patrones observados\\ & para detectar conductas an\'omalas.\\
+Control de procesos & Controlar sistemas f\'isicos basados en monitoreo.\\
+Conocimiento        & Detectar fallas en la manufactura de veh\'iculos o computadoras.\\
+Finanzas        & Detectar fraudes, manejo automatizado de stock market.\\ \bottomrule
+\end{tabular}
+\caption{Algunas aplicaciones de sistemas de conocimiento}
+\end{table}
+
+
+% Mencionar y describir arboles de decisi\'on.
+
+% \href{https://python3.foobrdigital.com/expert-systems/}{expert systems}
 % The layout of a table has been established over centuries of experience and 
 % should only be altered in extraordinary circumstances. 
 
